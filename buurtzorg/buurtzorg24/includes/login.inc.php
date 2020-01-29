@@ -55,9 +55,8 @@
 				$pwh = $result[0]['password'];
 				// use this method to verify if password matches
 				$bool = password_verify($password, $pwh);
-var_dump($bool);
-				if($bool === true) {
 
+				if($bool === true) {
 					// current status: login. Must be replaced by real user check
 					$_SESSION['user']['isloggedin'] = true;
 					$_SESSION['user']['uuid'] 		= $result[0]['uuid'];

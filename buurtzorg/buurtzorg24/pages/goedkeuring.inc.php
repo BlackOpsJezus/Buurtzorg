@@ -11,7 +11,7 @@
 	Must contain iPage interface implementation ie getHtml()
 	Called by content.inc.php
 */
-class AdminPage {
+class GoedkeuringPage {
 	
 		public function getHtml() {
 			if(defined('ACTION')) {			// process the action obtained is existent
@@ -43,7 +43,7 @@ class AdminPage {
 
 		private function getData(){
 			// execute a query and return the result
-			$sql='SELECT naam, adres, gebdatum, mail, vac_id, naamid FROM `tb_soll` WHERE status = 1 ORDER BY naam';
+			$sql='SELECT naam, adres, gebdatum, mail, vac_id, naamid FROM `tb_soll` WHERE status = 0 ORDER BY vac_id';
             $result = $this->createTable(Database::getData($sql));
 
 			//TODO: generate JSON output like this for webservices in future
@@ -68,7 +68,8 @@ class AdminPage {
 							<th>Gebdatum</th>
 							<th>Email</th>
 							<th>Vac_id</th>
-							<th>Goedkeuring</th>";
+							<th>Goedkeuring</th>
+							<th>Foutkeuring</th>";
 				// now process every row in the $dbResult array and convert into table
 				foreach ($p_aDbResult as $row){
 					$i = 0;
@@ -87,7 +88,10 @@ class AdminPage {
 								. "/update/" . $row["naamid"] 	// add ACTION and PARAM to the link
 								. ">$image</a></td>";			// link to edit icon
 					
-					   
+					    $table 	.= "<td><a href="
+								. $url 							// current menu
+								. "/delete/" . $row["naamid"] 	// add ACTION and PARAM to the link
+								. ">$image</a></td>";			// link to delete icon
 					
 					$table .= "</tr>";
 					
@@ -100,7 +104,7 @@ class AdminPage {
 	    //cr[U]d action
 		private function update() {
 			// remove selected record based om uuid in PARAM
-			$sql='UPDATE tb_soll SET status= 2 WHERE naamid="' . PARAM. '"';		
+			$sql='UPDATE tb_soll SET status= 1 WHERE naamid="' . PARAM. '"';		
             $result = Database::getData($sql);
 			$button = $this->addButton("/../../..", "Terug");	// add "/add" button. This is ACTION button
 			// first show button, then table
@@ -109,22 +113,16 @@ class AdminPage {
 		}
 	 
 	    //cru[D] action
-	   
-	   
+	    private function delete() {
+			// remove selected record based om uuid in PARAM
+			$sql='DELETE FROM tb_soll WHERE naamid="' . PARAM. '"';		
+            $result = Database::getData($sql);
+			$button = $this->addButton("/../../..", "Terug");	// add "/add" button. This is ACTION button
+			// first show button, then table
+
+			return $button ."<br>Deze sollicitant is verwijderd " . PARAM;
+		}
+	
 
 	}// class gebruikerPage
-
-
-	
-	 
-    
-
-	
-
- 
-
-
- 
-	
 ?>
-
