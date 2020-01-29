@@ -22,11 +22,15 @@
 
     //Menuitems paths
     define("HOME_PATH"          , $rootfolder . ROOT . "home");
+    define("SOLLICITATIE_PATH"  , $rootfolder . ROOT . "sollicitatie");
     define("VACATURE_PATH"      , $rootfolder . ROOT . "vacature");
     define("GEBRUIKERS_PATH"    , $rootfolder . ROOT . "gebruikers");
-    define("GEHEIM_PATH"        , $rootfolder . ROOT . "geheim");
+    define("GOEDKEURING_PATH"   , $rootfolder . ROOT . "goedkeuring");
     define("LOGOUT_PATH"        , $rootfolder . ROOT . "logout");
     define("ADMIN_PATH"         , $rootfolder . ROOT . "admin");
+    define("GEKOZEN_PATH"       , $rootfolder . ROOT . "gekozen");
+    define("MAIL_PATH"          , $rootfolder . ROOT . "mail");
+
 
     //Rootfolder paths
 	define("CSS_PATH"		    , ROOT 			. "css/");

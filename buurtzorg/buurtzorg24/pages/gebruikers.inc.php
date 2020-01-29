@@ -187,8 +187,6 @@ HTML;
 			// run query and obtain result
 			$result = Database::getData($sql, $aData);
 
-
-			$image = "<img src='".ICONS_PATH."noun_information user_24px.png' />";
 			$table = "<table border='1'>";
 			$table .= "<th>uuid</th>
 						<th>Inlognaam</th>
@@ -198,10 +196,7 @@ HTML;
 						<th>Status</th>
 						<th>Hash</th>
 						<th>Hashdatum</th>
-						<th>Timestamp</th>
-						<th>Bekijk</th>
-						<th>Verwijder</th>
-						<th>Aanpassen</th>";
+						<th>Timestamp</th>";
 			// now process every row in the $dbResult array and convert into table
 			foreach ($result as $row){
 				$table .= "<tr>";
@@ -211,21 +206,7 @@ HTML;
 					// calculate url and trim all parameters [0..9]
 					//	$url = rtrim($_SERVER['REQUEST_URI'],"/[0..9]");
 					// create new link with parameter (== edit user link!)
-					$table 	.= "<td><a href="
-							. GEBRUIKERS_PATH  							// current menu
-							. "/read/" . PARAM 	// add ACTION and PARAM to the link
-							. ">$image</a></td>";			// link to edit icon
-					//create new link with parameter (== delete user)
-					$table 	.= "<td><a href="
-							. GEBRUIKERS_PATH  							// current menu
-							. "/delete/" . PARAM 	// add ACTION and PARAM to the link
-							. ">$image</a></td>";			// link to delete icon
-					// create new link with parameter (== update)
-					$table 	.= "<td><a href="
-							. GEBRUIKERS_PATH 							// current menu
-							. "/update/" . PARAM 	// add ACTION and PARAM to the link
-							. ">$image</a></td>";			// link to delete icon
-				$table .= "</tr>";
+				
 				
 			} // foreach
 			$table .= "</table>";
@@ -253,6 +234,8 @@ HTML;
 		}
 
 		private function editForm() { // processed in $this->processFormAddUser()
+			$button = $this->addButton("/../..", "Terug");	
+			
 			$url = rtrim($_SERVER['REQUEST_URI'],"/[0..9]"); 	// strip not required info
 			// heredoc statement. Everything between 2 HTML labels is put into $html
 			$sql = "SELECT username, email, role, status FROM tb_users WHERE uuid = ? AND status = ?";
@@ -267,7 +250,7 @@ HTML;
 
 			$html = <<<HTML
 				<fieldset>
-					<legend>Voeg een nieuwe gebruiker toe</legend>
+					<legend>Aanpassen</legend>
 						<form action="$url" enctype="multipart/formdata" method="post">
 							<label>Inlognaam</label>
 							<input type="text" name="loginname" id="" value= "$username" placeholder="Inlognaam" />
@@ -287,7 +270,7 @@ HTML;
 							<label></label>
 							<!-- add hidden field for processing -->
 							<input type="hidden" name="frmAddUser" value="frmAddUser" />
-							<input type="submit" name="submit" value="Voeg toe" />
+							<input type="submit" name="submit" value="Aanpassen" />
 						</form>
 				</fieldset>
 HTML;
@@ -314,17 +297,7 @@ HTML;
 			*/
 			return "Gebruiker is aangepast.";
 		} //function
-
-
-
-
-
-
-
-
-
-
-
+		
 		//crd[D] action
 		private function delete() {
 			// remove selected record based om uuid in PARAM
